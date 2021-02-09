@@ -12,7 +12,7 @@ client.on("message", function(message) {
     if (!message.content.startsWith(prefix)) return;
 	if (message.channel.name !== 'позитивные-киноманы') return;
     const commandBody = message.content.slice(prefix.length);
-    const args = commandBody.split(' ');
+    const args = commandBody.split(/\s+/);
     const command = args.shift().toLowerCase();
 
     if (command === "просмотренныефильмы") {
