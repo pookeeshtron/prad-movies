@@ -11,7 +11,7 @@ client.on("message", function(message) {
     if (message.author.bot) return;
     if (!message.content.startsWith(prefix)) return;
 
-	if (message.channel.name === 'кинолюб') {
+	if (message.channel.name === 'кинозал') {
         const commandBody = message.content.slice(prefix.length);
         const args = commandBody.split(/\s+/);
         const command = args.shift().toLowerCase();
