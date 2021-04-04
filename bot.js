@@ -8,22 +8,15 @@ module.exports = {
 };
 const client = new Discord.Client();
 
+client.once('ready', () => {
+    console.log('Bot succsefully started!');
+});
+
 const prefix = "#";
-
-let guild;
-
-client.guilds.fetch('710589668844109936')
-    .then(guild_ => {
-        console.log(guild_.name + ' available');
-        guild = guild_;
-    })
-    .catch(console.error);
 
 let queue = [];
 
-console.log('Bot succsefully started!');
-
-client.on("message", async (message) => {
+client.on("message", message => {
     if (message.author.bot) return;
     //if (!message.content.startsWith(prefix)) return;
     if (message.content.startsWith('!')) {
@@ -74,11 +67,17 @@ client.on("message", async (message) => {
     }
 });
 
-function marry(message) {
+async function marry(message) {
 
     let author = message.author.username;
 
-    let members = guild.members.cache.array().filter(member => member.presence.status === 'offline');
+    let members;
+    
+    await message.guild.members.fetch()
+        .then(e => {members = e; console.log('success!')})
+        .catch(err => console.error(err));
+    
+    members = members.array().filter(member => member.presence.status !== 'offline');
     
     let user = members[_.random(0, members.length - 1)];
 
