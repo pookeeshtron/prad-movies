@@ -72,7 +72,7 @@ async function marry(message) {
     let author = message.author.username;
 
     let members;
-    
+
     await message.guild.members.fetch()
         .then(e => {members = e; console.log('success!')})
         .catch(err => console.error(err));
@@ -81,7 +81,7 @@ async function marry(message) {
     
     let user = members[_.random(0, members.length - 1)];
 
-    let reply = 'Объявляю ' + author + ' и ' + user.user.username +' парой!';
+    let reply = 'Объявляю ' + author + ' и ' + user.user.username +' парой! <3 <3 <3';
 
     message.reply(reply);
 
