@@ -10,9 +10,20 @@ const client = new Discord.Client();
 
 const prefix = "#";
 
+let guild;
+
+client.guilds.fetch('710589668844109936')
+    .then(guild_ => {
+        console.log(guild_.name + ' available');
+        guild = guild_;
+    })
+    .catch(console.error);
+
 let queue = [];
 
-client.on("message", function(message) {
+console.log('Bot succsefully started!');
+
+client.on("message", async (message) => {
     if (message.author.bot) return;
     //if (!message.content.startsWith(prefix)) return;
     if (message.content.startsWith('!')) {
@@ -28,6 +39,9 @@ client.on("message", function(message) {
                 break;
             case ('встать-в-очередь'):
                 addToQueue(message);
+                break;
+            case('marry'):
+                marry(message);
                 break;
             default:
                 break;
@@ -59,6 +73,20 @@ client.on("message", function(message) {
         }
     }
 });
+
+function marry(message) {
+
+    let author = message.author.username;
+
+    let members = guild.members.cache.array().filter(member => member.presence.status === 'offline');
+    
+    let user = members[_.random(0, members.length - 1)];
+
+    let reply = 'Объявляю ' + author + ' и ' + user.user.username +' парой!';
+
+    message.reply(reply);
+
+}
 
 function remindQueue(message) {
     let reply = createQueueReply();
