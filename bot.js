@@ -1,5 +1,7 @@
 const _ = require("underscore");
 const Discord = require("discord.js");
+const util = require('minecraft-server-util');
+
 
 require('dotenv').config()
 
@@ -35,6 +37,9 @@ client.on("message", message => {
                 break;
             case('marry'):
                 marry(message);
+                break;
+            case('сервер'):
+                serverStatus(message);
                 break;
             default:
                 break;
@@ -151,6 +156,26 @@ function addToQueue(message) {
     queue.push(username);
     let reply = createQueueReply();
     message.reply(reply);
+}
+
+function serverStatus(message) {
+    util.status('23.109.126.84', { port: 25682})
+        .then((response) => {
+            let players = response.samplePlayers;
+            if (!players) {
+                message.reply('Никого онлайн');
+            } else {
+                let reply = '``Сейчас онлайн:';
+                players.forEach(player => {
+                    reply += player.name + '\n';
+                });
+                reply += '``';
+                message.reply(reply);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 }
 
 client.login(process.env.BOT_TOKEN);
