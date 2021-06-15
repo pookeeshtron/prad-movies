@@ -165,11 +165,11 @@ function serverStatus(message) {
             if (!players) {
                 message.reply('Никого онлайн');
             } else {
-                let reply = '``Сейчас онлайн:';
+                let reply = '```\nСейчас онлайн:\n';
                 players.forEach(player => {
                     reply += player.name + '\n';
                 });
-                reply += '``';
+                reply += '```';
                 message.reply(reply);
             }
         })
